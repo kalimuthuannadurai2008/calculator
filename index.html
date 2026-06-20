@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .container {
+            width: 300px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        h3 {
+            color: blue;
+        }
+        .result-box {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 12px;
+            border: 2px solid #2196F3;
+            border-radius: 8px;
+            background: #f0f8ff;
+            font-weight: bold;
+            color: #0b5394;
+        }
+        .result-box.error {
+            border-color: #d8000c;
+            background: #ffd2d2;
+            color: #d8000c;
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculator</h2>
+        <input type="number" id="num1" placeholder="Enter First Number">
+        <input type="number" id="num2" placeholder="Enter Second Number">
+
+        <div style="margin-top: 15px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+            <button onclick="addNumbers()">Add</button>
+            <button onclick="subtractNumbers()">Subtract</button>
+            <button onclick="multiplyNumbers()">Multiply</button>
+            <button onclick="divideNumbers()">Divide</button>
+            <button onclick="modulusNumbers()">Modulus</button>
+        </div>
+
+        <h2>Result</h2>
+        <div id="all_resultBox" class="result-box">All calculation results will appear here</div>
+    </div>
+
+    <script>
+        function getInputs() {
+            return {
+                num1: Number(document.getElementById("num1").value),
+                num2: Number(document.getElementById("num2").value)
+            };
+        }
+
+        function showResult(text) {
+            const box = document.getElementById("all_resultBox");
+            box.classList.remove("error");
+            box.textContent = text;
+        }
+
+        function showError(text) {
+            const box = document.getElementById("all_resultBox");
+            box.classList.add("error");
+            box.textContent = text;
+        }
+
+        function addNumbers() {
+            let { num1, num2 } = getInputs();
+            let sum = num1 + num2;
+            showResult("Addition Result: " + sum);
+        }
+
+        function subtractNumbers() {
+            let { num1, num2 } = getInputs();
+            let difference = num1 - num2;
+            if (difference < 0) {
+                showError("Subtraction result cannot be negative. Use a larger first number.");
+                return;
+            }
+            showResult("Subtraction Result: " + difference);
+        }
+
+        function multiplyNumbers() {
+            let { num1, num2 } = getInputs();
+            let product = num1 * num2;
+            showResult("Multiplication Result: " + product);
+        }
+
+        function divideNumbers() {
+            let { num1, num2 } = getInputs();
+            if (num2 === 0) {
+                showError("Division by zero is not allowed.");
+                return;
+            }
+            let quotient = num1 / num2;
+            if (quotient < 1) {
+                showError("Division result must be at least 1.");
+                return;
+            }
+            showResult("Division Result: " + quotient);
+        }
+
+        function modulusNumbers() {
+            let { num1, num2 } = getInputs();
+            if (num2 === 0) {
+                showError("Modulus by zero is not allowed.");
+                return;
+            }
+            let remainder = num1 % num2;
+            showResult("Modulus Result: " + remainder);
+        }
+    </script>
+</body>
+</html>
